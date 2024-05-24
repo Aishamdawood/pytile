@@ -70,7 +70,7 @@ def locate_item_page():
         if st.button(f"Locate {row['Item Name']}", key=item_key):
             st.image("https://github.com/Aishamdawood/images/blob/92aed9e6d82fa9842f51a8ee8e86b93e8061fca2/ringing.gif?raw=true",  width=100, use_column_width=False)  # Replace with the direct link to your image file
             #st.audio("/workspaces/pytile/examples/rining.mp3", start_time=0)  # Replace with the path to your sound file
-            autoplay_audio("/workspaces/pytile/examples/rining.mp3")
+            autoplay_audio("/workspaces/pytile/rining.mp3")
             st.write(f"Locating {row['Item Name']} in the inventory")
         unique_id = unique_id + 1  # Increment the unique ID after rendering the page
 
