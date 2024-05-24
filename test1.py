@@ -8,7 +8,7 @@ if 'inventory' not in st.session_state:
 
 # Define the login page
 def login_page():
-    st.title("Login")
+    st.title("Easy Tag Simulation")
     username = st.text_input("Username")
     password = st.text_input("Password", type="password")
     if st.button("Login"):
@@ -20,7 +20,7 @@ def login_page():
 
 # Define the main page
 def main_page():
-    st.title("Welcome to the Main Page")
+    st.title("Login Page")
     st.markdown("**Easy Tag**")
     col1, col2 = st.columns(2)
     with col1:
