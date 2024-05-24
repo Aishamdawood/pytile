@@ -21,10 +21,10 @@ def login_page():
 # Define the main page
 def main_page():
     st.title("Welcome to the Main Page")
-    st.markdown("**Welcome**")
+    st.markdown("**Easy Tag**")
     col1, col2 = st.columns(2)
     with col1:
-        if st.button("Add Item"):
+        if st.button("Link Item"):
             st.session_state.page = "add_item_page"
             st.experimental_rerun()
     with col2:
@@ -39,7 +39,7 @@ def add_item_page():
     if st.button("Add"):
         new_item = pd.DataFrame({'Serial Number': [len(st.session_state.inventory) + 1], 'Item Name': [item_name]})
         st.session_state.inventory = pd.concat([st.session_state.inventory, new_item])
-        st.write(f"Added {item_name} to the inventory with Serial Number {len(st.session_state.inventory)}")
+        st.write(f"Added {item_name} to the directoy with Serial Number {len(st.session_state.inventory)}")
     if st.button("Go Back"):
         st.session_state.page = "main_page"
         st.experimental_rerun()
@@ -61,6 +61,25 @@ def autoplay_audio(file_path: str):
             unsafe_allow_html=True,
         )
 
+import threading
+import base64
+import streamlit as st
+
+def autoplay_audio(file_path: str):
+    with open(file_path, "rb") as f:
+        data = f.read()
+        b64 = base64.b64encode(data).decode()
+        md = f"""
+            <audio autoplay style="display:none;">
+            <source src="data:audio/mp3;base64,{b64}" type="audio/mp3">
+            Your browser does not support the audio element.
+            </audio>
+            """
+        st.markdown(
+            md,
+            unsafe_allow_html=True,
+        )
+
 def locate_item_page():
     st.title("Locate Item")
     st.write("Inventory:")
@@ -69,16 +88,16 @@ def locate_item_page():
         item_key = f"locate_{index}_{unique_id}"  # Append the unique_id to the key
         if st.button(f"Locate {row['Item Name']}", key=item_key):
             st.image("https://github.com/Aishamdawood/images/blob/92aed9e6d82fa9842f51a8ee8e86b93e8061fca2/ringing.gif?raw=true",  width=100, use_column_width=False)  # Replace with the direct link to your image file
-            #st.audio("/workspaces/pytile/examples/rining.mp3", start_time=0)  # Replace with the path to your sound file
-            autoplay_audio("rining.mp3")
+            autoplay_audio("/workspaces/pytile/rining.mp3")
             st.write(f"Locating {row['Item Name']} in the inventory")
         unique_id = unique_id + 1  # Increment the unique ID after rendering the page
 
+    if st.button("Found"):
+        st.write("Item found!")
+
     if st.button("Go Back", key=f"go_back_{unique_id}"):
         st.session_state.page = "main_page"
-        st.experimental_rerun()
-
-        
+        st.experimental_rerun()   
 # Set the page layout to "wide"
 st.set_page_config(page_title="My Streamlit App", layout="wide")
 
